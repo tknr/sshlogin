@@ -1,0 +1,18 @@
+#!/bin/bash
+export IFS=$'\n'
+CMDNAME=`basename $0`
+if [ $# -ne 1 ]; then
+	echo "usage : $CMDNAME <[user@]server>" 1>&2
+	exit 1
+fi
+
+if [ -e ~/.ssh/.password/$1 ]
+then
+	if type sshpass > /dev/null 2>&1
+	then
+		sshpass -f ~/.ssh/.password/$1 ssh $1
+	fi
+else
+	echo "file not found : ~/.ssh/.password/"$1" .";
+	exit 1;
+fi
