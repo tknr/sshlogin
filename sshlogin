@@ -6,15 +6,17 @@ if [ $# -lt 1 ]; then
 	exit 1
 fi
 
+ls -lh ~/.ssh/.password/$1
+
 if [ -e ~/.ssh/.password/$1 ]
 then
 	if type sshpass > /dev/null 2>&1
 	then
 		if [ $# -eq 1 ]; then
-			sshpass -f ~/.ssh/.password/$1 ssh $1
+			sshpass -v -f ~/.ssh/.password/$1 ssh $1
 		else
 			echo ${@:2}
-			sshpass -f ~/.ssh/.password/$1 ${@:2}
+#			sshpass -v -p `echo ~/.ssh/.password/$1` ${@:2}
 		fi
 	fi
 else
